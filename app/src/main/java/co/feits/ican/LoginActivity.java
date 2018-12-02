@@ -21,12 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity
 {
-    static
-    {
-    FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-    }
+    static { FirebaseDatabase.getInstance().setPersistenceEnabled(true); }
     FirebaseAuth mAuth;
-
     private EditText inputEmail, inputPassword;
 
     @Override
@@ -35,19 +31,16 @@ public class LoginActivity extends AppCompatActivity
         setContentView(R.layout.activity_login);
         inputEmail = findViewById(R.id.et_LoginEmail);
         inputPassword = findViewById(R.id.et_LoginPassword);
-
-        TextView mTvRegister=findViewById(R.id.tvRegister);
-
+        TextView mTvRegister = findViewById(R.id.tvRegister);
         mTvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                startActivity(new Intent(getBaseContext(),RegisterActivity.class));
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(), RegisterActivity.class));
             }
         });
 
-       // inputEmail.setText("mrabdullah1497@gmail.com");
-       // inputPassword.setText("hello123");
+        // inputEmail.setText("mrabdullah1497@gmail.com");
+        // inputPassword.setText("hello123");
 
         final Button loginButton = findViewById(R.id.btLogin);
         mAuth = FirebaseAuth.getInstance();
@@ -59,46 +52,26 @@ public class LoginActivity extends AppCompatActivity
 
                 if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                     Toast.makeText(getApplicationContext(), "Enter complete details", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!isNetworkConnected())
-                {
+                } else if (!isNetworkConnected()) {
                     Toast.makeText(LoginActivity.this, "Check your network", Toast.LENGTH_SHORT).show();
+                } else {
+                    loginUser(email, password);
                 }
-
-                else
-                {
-                    loginUser(email,password);
-                }
-
-
             }
-
-
         });
-
 
     }
 
-
-
-
-    private void loginUser(String email, String password)
-    {
+    private void loginUser(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task)
-                    {
-                        if (task.isSuccessful())
-                        {
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getBaseContext(),MainActivity.class));
+                            startActivity(new Intent(getBaseContext(), MainActivity.class));
                             finish();
-                        }
-
-                        else
-                        {
+                        } else {
                             Toast.makeText(LoginActivity.this, "Wrong Credentials!", Toast.LENGTH_SHORT).show();
 
                         }
@@ -107,18 +80,8 @@ public class LoginActivity extends AppCompatActivity
                 });
     }
 
-
-
-
-
-
-
-
-
-
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
-
 }

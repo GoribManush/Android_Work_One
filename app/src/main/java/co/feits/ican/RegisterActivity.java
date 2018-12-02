@@ -33,7 +33,6 @@ public class RegisterActivity extends AppCompatActivity
         etDateofBirth=findViewById(R.id.et_date_of_birth);
         etEmail=findViewById(R.id.et_LoginEmail);
         etPassword=findViewById(R.id.et_LoginPassword);
-
         Button RegisterButton=findViewById(R.id.button_register);
 
         RegisterButton.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +49,6 @@ public class RegisterActivity extends AppCompatActivity
                     return;
                 }
 
-
                 else
                 {
                     progressDialog= new ProgressDialog(RegisterActivity.this);
@@ -60,21 +58,14 @@ public class RegisterActivity extends AppCompatActivity
                     String email=etEmail.getText().toString();
                     String password=etPassword.getText().toString();
                     createUser(email,password);
-
                 }
 
             }
         });
     }
 
-
-
-
-
     public void createUser(final String email, String password)
     {
-
-
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
                 {
@@ -114,14 +105,7 @@ public class RegisterActivity extends AppCompatActivity
                             progressDialog.dismiss();
                             Toast.makeText(RegisterActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
                         }
-
-
                     }
                 });
-
-
     }
-
-
-
 }
